@@ -1,0 +1,85 @@
+<resources>
+    <string name="app_name">Wishlot</string>
+    <string name="tab_wishlist">Вишлист</string>
+    <string name="tab_treat">Побаловать себя</string>
+    <string name="tab_history">История</string>
+    <string name="tab_settings">Настройки</string>
+
+    <string name="wishlist_empty">Добавьте первое желание</string>
+    <string name="wishlist_add">Добавить желание</string>
+    <string name="wish_delete">Удалить</string>
+    <string name="wish_archive">В архив</string>
+    <string name="wish_move_up">Поднять</string>
+    <string name="wish_move_down">Опустить</string>
+
+    <string name="wish_title_label">Название</string>
+    <string name="wish_price_label">Цена (₽)</string>
+    <string name="wish_note_label">Заметка</string>
+    <string name="wish_category_label">Категория</string>
+    <string name="wish_priority_label">Приоритет в розыгрыше</string>
+    <string name="wish_priority_hint">Выше приоритет — чаще выпадает при кручении</string>
+    <string name="wish_save">Сохранить</string>
+    <string name="wish_add_title">Новое желание</string>
+    <string name="wish_edit_title">Редактировать</string>
+    <string name="confirm_back">Назад</string>
+
+    <string name="category_tech">Техника</string>
+    <string name="category_books">Книги</string>
+    <string name="category_fashion">Одежда</string>
+    <string name="category_food">Еда и кафе</string>
+    <string name="category_other">Другое</string>
+
+    <string name="priority_normal">Обычный</string>
+    <string name="priority_high">Высокий</string>
+    <string name="priority_highest">Очень высокий</string>
+
+    <string name="treat_title">Сколько готовы потратить?</string>
+    <string name="treat_subtitle">Покажем желания не дороже этой суммы</string>
+    <string name="treat_budget_label">Бюджет (₽)</string>
+    <string name="treat_spin">Крутить</string>
+    <string name="treat_no_active">Сначала добавьте желания в вишлист</string>
+
+    <string name="pick_no_candidates_title">Нет подходящих желаний</string>
+    <string name="pick_no_candidates_body">В этом бюджете ничего не влезает. Увеличьте сумму или добавьте желания подешевле.</string>
+    <string name="pick_change_budget">Изменить бюджет</string>
+    <string name="pick_go_wishlist">К вишлисту</string>
+
+    <string name="spin_result_title">Ваше желание</string>
+    <string name="spin_accept">Беру!</string>
+    <string name="spin_decline">Не сейчас</string>
+    <string name="spin_again">Крутить снова</string>
+    <string name="spin_fulfilled_hint">Отметим как исполненное в списке (покупка — отдельно)</string>
+
+    <string name="history_empty">Пока ничего не исполнили</string>
+    <string name="history_fulfilled_at">Исполнено %1$s</string>
+    <string name="restore_to_wishlist">Вернуть в вишлист</string>
+    <string name="restore_success">Желание снова в вишлисте</string>
+
+    <string name="archived_title">Архив</string>
+    <string name="archived_empty">Архив пуст</string>
+
+    <string name="settings_stats_title">Статистика</string>
+    <string name="settings_stats_active">Активных: %1$d · на сумму %2$s</string>
+    <string name="settings_stats_fulfilled">Исполнено: %1$d · на сумму %2$s</string>
+    <string name="settings_stats_archived">В архиве: %1$d</string>
+    <string name="settings_animation_title">Анимация колеса</string>
+    <string name="settings_animation_subtitle">Если выключено — карточка появится сразу</string>
+    <string name="settings_data_title">Данные</string>
+    <string name="settings_version">Версия %1$s · %2$s</string>
+
+    <string name="backup_export">Экспорт JSON</string>
+    <string name="backup_import">Импорт JSON</string>
+    <string name="export_success">Резервная копия сохранена</string>
+    <string name="import_success">Импортировано желаний: %1$d</string>
+
+    <string name="error_empty_title">Введите название</string>
+    <string name="error_invalid_price">Укажите цену больше нуля</string>
+    <string name="error_invalid_budget">Укажите бюджет больше нуля</string>
+    <string name="error_no_active_wishes">В вишлисте нет активных желаний</string>
+    <string name="error_save_failed">Не удалось сохранить</string>
+    <string name="error_delete_failed">Не удалось удалить</string>
+    <string name="error_load_failed">Не удалось загрузить</string>
+    <string name="error_pick_failed">Не удалось выбрать желание</string>
+    <string name="error_import_failed">Не удалось импортировать</string>
+    <string name="error_export_failed">Не удалось экспортировать</string>
+</resources>

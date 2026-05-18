@@ -1,0 +1,1 @@
+# Wishlot — ProGuard rules (release)
