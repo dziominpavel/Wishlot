@@ -31,7 +31,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import com.example.wishlot.R
 import com.example.wishlot.ui.components.CategoryPicker
-import com.example.wishlot.ui.components.PriorityPicker
 import com.example.wishlot.ui.theme.Spacing
 import com.example.wishlot.viewmodel.WishEditDraft
 
@@ -49,7 +48,6 @@ fun AddEditWishScreen(
     var priceInput by remember(draft) { mutableStateOf(draft.priceInput) }
     var note by remember(draft) { mutableStateOf(draft.note) }
     var category by remember(draft) { mutableStateOf(draft.category) }
-    var priority by remember(draft) { mutableStateOf(draft.priority) }
 
     val titleRes = if (draft.id != null) R.string.wish_edit_title else R.string.wish_add_title
 
@@ -103,21 +101,6 @@ fun AddEditWishScreen(
                 modifier = Modifier.padding(top = Spacing.xs),
             )
             Spacer(modifier = Modifier.height(Spacing.md))
-            Text(
-                text = stringResource(R.string.wish_priority_label),
-                style = MaterialTheme.typography.labelLarge,
-            )
-            Text(
-                text = stringResource(R.string.wish_priority_hint),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            PriorityPicker(
-                selected = priority,
-                onSelected = { priority = it },
-                modifier = Modifier.padding(top = Spacing.xs),
-            )
-            Spacer(modifier = Modifier.height(Spacing.md))
             OutlinedTextField(
                 value = note,
                 onValueChange = { note = it },
@@ -134,7 +117,6 @@ fun AddEditWishScreen(
                             priceInput = priceInput,
                             note = note,
                             category = category,
-                            priority = priority,
                         ),
                     )
                 },

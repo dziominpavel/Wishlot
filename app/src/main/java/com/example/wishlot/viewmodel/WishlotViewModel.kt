@@ -69,9 +69,6 @@ class WishlotViewModel(application: Application) : AndroidViewModel(application)
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), WishStats())
 
-    val wheelAnimationEnabled = settings.wheelAnimationEnabled
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), true)
-
     val versionName: String = BuildConfig.VERSION_NAME
     val buildDate: String = BuildConfig.BUILD_DATE
 
@@ -95,12 +92,6 @@ class WishlotViewModel(application: Application) : AndroidViewModel(application)
 
     fun setBudgetInput(value: String) {
         _budgetInput.value = value
-    }
-
-    fun setWheelAnimationEnabled(enabled: Boolean) {
-        safeDb(getString(R.string.error_save_failed)) {
-            settings.setWheelAnimationEnabled(enabled)
-        }
     }
 
     fun openAddWish() {
@@ -148,7 +139,6 @@ class WishlotViewModel(application: Application) : AndroidViewModel(application)
                         priceMinor = priceMinor,
                         note = note,
                         category = draft.category.name,
-                        priority = draft.priority.weight,
                     ),
                 )
             } else {
@@ -162,7 +152,6 @@ class WishlotViewModel(application: Application) : AndroidViewModel(application)
                         note = note,
                         status = WishStatus.ACTIVE.name,
                         category = draft.category.name,
-                        priority = draft.priority.weight,
                         sortOrder = sortOrder,
                         createdAt = now,
                         fulfilledAt = null,
@@ -198,18 +187,6 @@ class WishlotViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    fun moveWishUp(id: Long) {
-        safeDb(getString(R.string.error_save_failed)) {
-            repository.moveWishUp(id)
-        }
-    }
-
-    fun moveWishDown(id: Long) {
-        safeDb(getString(R.string.error_save_failed)) {
-            repository.moveWishDown(id)
-        }
-    }
-
     fun startPick() {
         val budgetMinor = MoneyUtils.parseRublesInput(_budgetInput.value)
         if (budgetMinor == null) {
@@ -228,12 +205,8 @@ class WishlotViewModel(application: Application) : AndroidViewModel(application)
                 PickResult.NoCandidates -> _pickState.value = PickUiState.NoCandidates
                 is PickResult.Winner -> {
                     val winner = activeWishes.value.first { it.id == result.wish.id }
-                    if (wheelAnimationEnabled.value) {
-                        val wheelItems = buildWheelItems(activeWishes.value, winner)
-                        _pickState.value = PickUiState.Spinning(winner, wheelItems)
-                    } else {
-                        _pickState.value = PickUiState.AwaitingDecision(winner)
-                    }
+                    val wheelItems = buildWheelItems(activeWishes.value, winner)
+                    _pickState.value = PickUiState.Spinning(winner, wheelItems)
                 }
             }
         }
@@ -288,7 +261,6 @@ class WishlotViewModel(application: Application) : AndroidViewModel(application)
         priceInput = MoneyUtils.minorToDisplayInput(priceMinor),
         note = note.orEmpty(),
         category = com.example.wishlot.data.WishCategory.fromName(category),
-        priority = com.example.wishlot.data.WishPriority.fromValue(priority),
     )
 
     private fun buildWheelItems(active: List<Wish>, winner: Wish): List<Wish> {

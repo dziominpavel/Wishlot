@@ -1,6 +1,5 @@
 package com.example.wishlot.data.pick
 
-import com.example.wishlot.data.WishPriority
 import com.example.wishlot.data.WishStatus
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -52,18 +51,5 @@ class WishPickerTest {
         val first = WishPicker.pickRandom(candidates, Random(42))
         val second = WishPicker.pickRandom(candidates, Random(42))
         assertEquals(first, second)
-    }
-
-    @Test
-    fun pickWeighted_highPriorityWinsMoreOften() {
-        val low = WishSnapshot(1, "Low", 1_000, WishStatus.ACTIVE, priority = 1)
-        val high = WishSnapshot(2, "High", 1_000, WishStatus.ACTIVE, priority = 3)
-        val candidates = listOf(low, high)
-        var highWins = 0
-        repeat(1_000) { i ->
-            val winner = WishPicker.pickWeighted(candidates, Random(i))
-            if (winner?.id == high.id) highWins++
-        }
-        assertTrue("High priority should win > 60%", highWins > 600)
     }
 }

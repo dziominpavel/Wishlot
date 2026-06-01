@@ -2,14 +2,13 @@ package com.example.wishlot.data.backup
 
 import com.example.wishlot.data.Wish
 import com.example.wishlot.data.WishCategory
-import com.example.wishlot.data.WishPriority
 import com.example.wishlot.data.WishStatus
 import org.json.JSONArray
 import org.json.JSONObject
 
 object BackupCodec {
 
-    const val SCHEMA_VERSION = 1
+    const val SCHEMA_VERSION = 2
 
     fun exportJson(wishes: List<Wish>): String {
         val root = JSONObject()
@@ -25,7 +24,6 @@ object BackupCodec {
                     put("note", wish.note ?: JSONObject.NULL)
                     put("status", wish.status)
                     put("category", wish.category)
-                    put("priority", wish.priority)
                     if (wish.sortOrder != null) put("sortOrder", wish.sortOrder)
                     put("createdAt", wish.createdAt)
                     if (wish.fulfilledAt != null) put("fulfilledAt", wish.fulfilledAt)
@@ -53,7 +51,6 @@ object BackupCodec {
                         note = if (item.isNull("note")) null else item.optString("note").takeIf { it.isNotBlank() },
                         status = item.getString("status"),
                         category = WishCategory.fromName(item.optString("category", WishCategory.OTHER.name)).name,
-                        priority = WishPriority.fromValue(item.optInt("priority", 1)).weight,
                         sortOrder = if (item.has("sortOrder") && !item.isNull("sortOrder")) {
                             item.getInt("sortOrder")
                         } else {

@@ -1,6 +1,5 @@
 package com.example.wishlot.data.pick
 
-import com.example.wishlot.data.WishPriority
 import com.example.wishlot.data.WishStatus
 import kotlin.random.Random
 
@@ -13,22 +12,7 @@ object WishPicker {
 
     fun pickRandom(candidates: List<WishSnapshot>, random: Random = Random.Default): WishSnapshot? {
         if (candidates.isEmpty()) return null
-        return pickWeighted(candidates, random)
-    }
-
-    /** Weighted random: priority 1/2/3 → weights 1/2/3. */
-    fun pickWeighted(candidates: List<WishSnapshot>, random: Random = Random.Default): WishSnapshot? {
-        if (candidates.isEmpty()) return null
-        if (candidates.size == 1) return candidates.first()
-
-        val weights = candidates.map { WishPriority.fromValue(it.priority).weight }
-        val total = weights.sum()
-        var roll = random.nextInt(total)
-        candidates.forEachIndexed { index, candidate ->
-            roll -= weights[index]
-            if (roll < 0) return candidate
-        }
-        return candidates.last()
+        return candidates[random.nextInt(candidates.size)]
     }
 
     fun runPick(input: PickInput, random: Random = Random.Default): PickResult {

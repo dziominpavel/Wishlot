@@ -1,7 +1,6 @@
 package com.example.wishlot.viewmodel
 
 import com.example.wishlot.data.WishCategory
-import com.example.wishlot.data.WishPriority
 
 data class WishEditDraft(
     val id: Long? = null,
@@ -9,7 +8,6 @@ data class WishEditDraft(
     val priceInput: String = "",
     val note: String = "",
     val category: WishCategory = WishCategory.OTHER,
-    val priority: WishPriority = WishPriority.NORMAL,
 )
 
 data class WishStats(

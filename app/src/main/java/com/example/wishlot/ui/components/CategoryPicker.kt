@@ -42,27 +42,6 @@ fun CategoryPicker(
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-fun PriorityPicker(
-    selected: com.example.wishlot.data.WishPriority,
-    onSelected: (com.example.wishlot.data.WishPriority) -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    FlowRow(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
-    ) {
-        com.example.wishlot.data.WishPriority.entries.forEach { priority ->
-            FilterChip(
-                selected = priority == selected,
-                onClick = { onSelected(priority) },
-                label = { Text(stringResource(priority.labelRes)) },
-            )
-        }
-    }
-}
-
 @Composable
 fun CategoryLabel(
     category: WishCategory,

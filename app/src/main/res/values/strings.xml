@@ -16,8 +16,6 @@
     <string name="wish_price_label">Цена (₽)</string>
     <string name="wish_note_label">Заметка</string>
     <string name="wish_category_label">Категория</string>
-    <string name="wish_priority_label">Приоритет в розыгрыше</string>
-    <string name="wish_priority_hint">Выше приоритет — чаще выпадает при кручении</string>
     <string name="wish_save">Сохранить</string>
     <string name="wish_add_title">Новое желание</string>
     <string name="wish_edit_title">Редактировать</string>
@@ -28,10 +26,6 @@
     <string name="category_fashion">Одежда</string>
     <string name="category_food">Еда и кафе</string>
     <string name="category_other">Другое</string>
-
-    <string name="priority_normal">Обычный</string>
-    <string name="priority_high">Высокий</string>
-    <string name="priority_highest">Очень высокий</string>
 
     <string name="treat_title">Сколько готовы потратить?</string>
     <string name="treat_subtitle">Покажем желания не дороже этой суммы</string>
@@ -62,8 +56,6 @@
     <string name="settings_stats_active">Активных: %1$d · на сумму %2$s</string>
     <string name="settings_stats_fulfilled">Исполнено: %1$d · на сумму %2$s</string>
     <string name="settings_stats_archived">В архиве: %1$d</string>
-    <string name="settings_animation_title">Анимация колеса</string>
-    <string name="settings_animation_subtitle">Если выключено — карточка появится сразу</string>
     <string name="settings_data_title">Данные</string>
     <string name="settings_version">Версия %1$s · %2$s</string>
 

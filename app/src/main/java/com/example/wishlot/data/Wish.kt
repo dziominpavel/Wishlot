@@ -20,7 +20,6 @@ data class Wish(
     val note: String?,
     val status: String,
     val category: String = WishCategory.OTHER.name,
-    val priority: Int = WishPriority.NORMAL.weight,
     val sortOrder: Int? = null,
     val createdAt: Long,
     val fulfilledAt: Long?,
