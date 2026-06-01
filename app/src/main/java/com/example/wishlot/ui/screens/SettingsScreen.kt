@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -20,8 +19,6 @@ import com.example.wishlot.viewmodel.WishStats
 fun SettingsScreen(
     stats: WishStats,
     formatPrice: (Long) -> String,
-    wheelAnimationEnabled: Boolean,
-    onWheelAnimationChange: (Boolean) -> Unit,
     onOpenArchived: () -> Unit,
     onExportBackup: () -> Unit,
     onImportBackup: () -> Unit,
@@ -62,23 +59,6 @@ fun SettingsScreen(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
-
-        HorizontalDivider(modifier = Modifier.padding(vertical = Spacing.lg))
-
-        Text(
-            text = stringResource(R.string.settings_animation_title),
-            style = MaterialTheme.typography.titleMedium,
-        )
-        Text(
-            text = stringResource(R.string.settings_animation_subtitle),
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-        Switch(
-            checked = wheelAnimationEnabled,
-            onCheckedChange = onWheelAnimationChange,
-            modifier = Modifier.padding(top = Spacing.xs),
-        )
 
         HorizontalDivider(modifier = Modifier.padding(vertical = Spacing.lg))
 

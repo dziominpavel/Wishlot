@@ -15,25 +15,14 @@ private val Context.settingsDataStore: DataStore<Preferences> by preferencesData
 class SettingsRepository(private val context: Context) {
 
     private val lastBudgetKey = longPreferencesKey("last_treat_budget_minor")
-    private val wheelAnimationKey = booleanPreferencesKey("wheel_animation_enabled")
 
     val lastTreatBudgetMinor: Flow<Long?> = context.settingsDataStore.data.map { prefs ->
         prefs[lastBudgetKey]
     }
 
-    val wheelAnimationEnabled: Flow<Boolean> = context.settingsDataStore.data.map { prefs ->
-        prefs[wheelAnimationKey] ?: true
-    }
-
     suspend fun setLastTreatBudgetMinor(minor: Long) {
         context.settingsDataStore.edit { prefs ->
             prefs[lastBudgetKey] = minor
-        }
-    }
-
-    suspend fun setWheelAnimationEnabled(enabled: Boolean) {
-        context.settingsDataStore.edit { prefs ->
-            prefs[wheelAnimationKey] = enabled
         }
     }
 

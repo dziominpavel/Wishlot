@@ -58,34 +58,6 @@ class WishRepository(context: Context) {
         dao.maxActiveSortOrder() + 1
     }
 
-    suspend fun moveWishUp(id: Long) = withContext(Dispatchers.IO) {
-        val active = dao.observeActive()
-        // Can't use flow in suspend easily - get all and filter
-        val wishes = dao.getAll().filter { it.status == WishStatus.ACTIVE.name }
-            .sortedWith(compareBy({ it.sortOrder == null }, { it.sortOrder }, { it.createdAt }, { it.id }))
-        val index = wishes.indexOfFirst { it.id == id }
-        if (index <= 0) return@withContext
-        val current = wishes[index]
-        val above = wishes[index - 1]
-        val currentOrder = current.sortOrder ?: (index + 1)
-        val aboveOrder = above.sortOrder ?: index
-        dao.updateSortOrder(current.id, aboveOrder)
-        dao.updateSortOrder(above.id, currentOrder)
-    }
-
-    suspend fun moveWishDown(id: Long) = withContext(Dispatchers.IO) {
-        val wishes = dao.getAll().filter { it.status == WishStatus.ACTIVE.name }
-            .sortedWith(compareBy({ it.sortOrder == null }, { it.sortOrder }, { it.createdAt }, { it.id }))
-        val index = wishes.indexOfFirst { it.id == id }
-        if (index < 0 || index >= wishes.lastIndex) return@withContext
-        val current = wishes[index]
-        val below = wishes[index + 1]
-        val currentOrder = current.sortOrder ?: (index + 1)
-        val belowOrder = below.sortOrder ?: (index + 2)
-        dao.updateSortOrder(current.id, belowOrder)
-        dao.updateSortOrder(below.id, currentOrder)
-    }
-
     companion object {
         @Volatile
         private var instance: WishRepository? = null

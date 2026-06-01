@@ -29,8 +29,6 @@ fun WishlistScreen(
     formatPrice: (Long) -> String,
     onWishClick: (Long) -> Unit,
     onAddClick: () -> Unit,
-    onMoveUp: (Long) -> Unit,
-    onMoveDown: (Long) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
@@ -65,13 +63,11 @@ fun WishlistScreen(
                 verticalArrangement = Arrangement.spacedBy(Spacing.xs),
             ) {
                 item { Spacer(modifier = Modifier.padding(top = Spacing.xs)) }
-                itemsIndexed(wishes, key = { _, wish -> wish.id }) { index, wish ->
+                itemsIndexed(wishes, key = { _, wish -> wish.id }) { _, wish ->
                     WishCard(
                         wish = wish,
                         priceLabel = formatPrice(wish.priceMinor),
                         onClick = { onWishClick(wish.id) },
-                        onMoveUp = if (index > 0) {{ onMoveUp(wish.id) }} else null,
-                        onMoveDown = if (index < wishes.lastIndex) {{ onMoveDown(wish.id) }} else null,
                     )
                 }
                 item { Spacer(modifier = Modifier.padding(bottom = Spacing.lg + Spacing.md)) }

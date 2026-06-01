@@ -32,3 +32,10 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+# Auto-generated version file
+version.properties
+
+# Launcher icon PNGs (generated artifacts, adaptive icons used instead)
+app/src/main/res/mipmap-*/ic_launcher*.png
+app/src/main/res/drawable/ic_launcher_foreground.png

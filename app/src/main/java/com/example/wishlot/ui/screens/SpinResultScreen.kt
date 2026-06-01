@@ -43,7 +43,6 @@ import com.example.wishlot.viewmodel.PickUiState
 fun SpinResultScreen(
     pickState: PickUiState,
     formatPrice: (Long) -> String,
-    wheelAnimationEnabled: Boolean,
     onSpinAnimationComplete: () -> Unit,
     onAccept: () -> Unit,
     onDecline: () -> Unit,
@@ -104,7 +103,6 @@ fun SpinResultScreen(
                 FortuneWheel(
                     items = wheelItems,
                     winner = winner,
-                    animationEnabled = wheelAnimationEnabled,
                     onSpinEnd = onSpinAnimationComplete,
                 )
             }

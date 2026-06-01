@@ -24,7 +24,6 @@ import kotlin.math.min
 fun FortuneWheel(
     items: List<Wish>,
     winner: Wish,
-    animationEnabled: Boolean,
     onSpinEnd: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -33,8 +32,8 @@ fun FortuneWheel(
     val winnerIndex = items.take(segmentCount).indexOfFirst { it.id == winner.id }
         .let { if (it >= 0) it else 0 }
 
-    LaunchedEffect(winner.id, animationEnabled) {
-        if (animationEnabled && segmentCount > 1) {
+    LaunchedEffect(winner.id) {
+        if (segmentCount > 1) {
             val segmentAngle = 360f / segmentCount
             val target = 360f * 4 + (360f - winnerIndex * segmentAngle - segmentAngle / 2f)
             rotation.animateTo(

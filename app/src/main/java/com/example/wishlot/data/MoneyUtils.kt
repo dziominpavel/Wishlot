@@ -17,15 +17,9 @@ object MoneyUtils {
         return value.multiply(java.math.BigDecimal(100)).longValueExact()
     }
 
-    fun formatMinor(minor: Long, locale: Locale = Locale.getDefault()): String {
+    fun formatMinor(minor: Long): String {
         val amount = minor / 100.0
-        val format = NumberFormat.getCurrencyInstance(locale)
-        try {
-            format.currency = Currency.getInstance("RUB")
-        } catch (_: IllegalArgumentException) {
-            // locale without RUB — use default currency
-        }
-        return format.format(amount)
+        return String.format(Locale.getDefault(), "%,.0f", amount).replace(" ", "\u00A0")
     }
 
     fun minorToDisplayInput(minor: Long): String {

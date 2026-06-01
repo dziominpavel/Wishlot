@@ -77,8 +77,6 @@ fun WishlotApp(viewModel: WishlotViewModel = viewModel()) {
     val archivedWishes by viewModel.archivedWishes.collectAsState()
     val showArchived by viewModel.showArchived.collectAsState()
     val stats by viewModel.stats.collectAsState()
-    val wheelAnimationEnabled by viewModel.wheelAnimationEnabled.collectAsState()
-
     val showPickOverlay = pickState is PickUiState.Spinning || pickState is PickUiState.AwaitingDecision
     val showNoCandidates = pickState is PickUiState.NoCandidates
 
@@ -165,8 +163,6 @@ fun WishlotApp(viewModel: WishlotViewModel = viewModel()) {
                         formatPrice = viewModel::formatPrice,
                         onWishClick = viewModel::openEditWish,
                         onAddClick = viewModel::openAddWish,
-                        onMoveUp = viewModel::moveWishUp,
-                        onMoveDown = viewModel::moveWishDown,
                     )
                     AppDestinations.TREAT -> TreatYourselfScreen(
                         budgetInput = budgetInput,
@@ -182,8 +178,6 @@ fun WishlotApp(viewModel: WishlotViewModel = viewModel()) {
                     AppDestinations.SETTINGS -> SettingsScreen(
                         stats = stats,
                         formatPrice = viewModel::formatPrice,
-                        wheelAnimationEnabled = wheelAnimationEnabled,
-                        onWheelAnimationChange = viewModel::setWheelAnimationEnabled,
                         onOpenArchived = viewModel::openArchived,
                         onExportBackup = {
                             val stamp = SimpleDateFormat("yyyyMMdd_HHmm", Locale.US).format(Date())
@@ -233,7 +227,6 @@ fun WishlotApp(viewModel: WishlotViewModel = viewModel()) {
             SpinResultScreen(
                 pickState = pickState,
                 formatPrice = viewModel::formatPrice,
-                wheelAnimationEnabled = wheelAnimationEnabled,
                 onSpinAnimationComplete = viewModel::onSpinAnimationComplete,
                 onAccept = viewModel::acceptPick,
                 onDecline = viewModel::declinePick,
