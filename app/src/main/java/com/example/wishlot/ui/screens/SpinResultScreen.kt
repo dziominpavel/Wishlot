@@ -3,7 +3,6 @@ package com.example.wishlot.ui.screens
 import android.view.HapticFeedbackConstants
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -45,8 +44,6 @@ fun SpinResultScreen(
     formatPrice: (Long) -> String,
     onSpinAnimationComplete: () -> Unit,
     onAccept: () -> Unit,
-    onDecline: () -> Unit,
-    onSpinAgain: () -> Unit,
     onBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -57,11 +54,6 @@ fun SpinResultScreen(
         is PickUiState.Spinning -> pickState.winner
         is PickUiState.AwaitingDecision -> pickState.winner
         else -> return
-    }
-    val wheelItems = when (pickState) {
-        is PickUiState.Spinning -> pickState.wheelItems
-        is PickUiState.AwaitingDecision -> listOf(pickState.winner)
-        else -> emptyList()
     }
     val showActions = pickState is PickUiState.AwaitingDecision
 
@@ -99,68 +91,40 @@ fun SpinResultScreen(
                 .padding(horizontal = Spacing.md),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            if (pickState is PickUiState.Spinning) {
-                FortuneWheel(
-                    items = wheelItems,
-                    winner = winner,
-                    onSpinEnd = onSpinAnimationComplete,
-                )
-            }
+            FortuneWheel(
+                spinKey = winner.id,
+                onSpinEnd = onSpinAnimationComplete,
+            )
             Spacer(modifier = Modifier.height(Spacing.md))
-            Card(modifier = Modifier.fillMaxWidth()) {
-                Column(modifier = Modifier.padding(Spacing.md)) {
-                    Text(
-                        text = winner.title,
-                        style = MaterialTheme.typography.headlineSmall,
-                    )
-                    Text(
-                        text = formatPrice(winner.priceMinor),
-                        style = MaterialTheme.typography.titleLarge,
-                        color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.padding(top = Spacing.xs),
-                    )
-                    winner.note?.takeIf { it.isNotBlank() }?.let { note ->
+            if (showActions) {
+                Card(modifier = Modifier.fillMaxWidth()) {
+                    Column(modifier = Modifier.padding(Spacing.md)) {
                         Text(
-                            text = note,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            text = winner.title,
+                            style = MaterialTheme.typography.headlineSmall,
+                        )
+                        Text(
+                            text = formatPrice(winner.priceMinor),
+                            style = MaterialTheme.typography.titleLarge,
+                            color = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.padding(top = Spacing.xs),
                         )
+                        winner.note?.takeIf { it.isNotBlank() }?.let { note ->
+                            Text(
+                                text = note,
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                modifier = Modifier.padding(top = Spacing.xs),
+                            )
+                        }
                     }
                 }
-            }
-            if (showActions) {
-                Text(
-                    text = stringResource(R.string.spin_fulfilled_hint),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(top = Spacing.md),
-                )
                 Spacer(modifier = Modifier.height(Spacing.md))
-                Row(
+                Button(
+                    onClick = onAccept,
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(Spacing.xs),
                 ) {
-                    OutlinedButton(
-                        onClick = onDecline,
-                        modifier = Modifier.weight(1f),
-                    ) {
-                        Text(stringResource(R.string.spin_decline))
-                    }
-                    Button(
-                        onClick = onAccept,
-                        modifier = Modifier.weight(1f),
-                    ) {
-                        Text(stringResource(R.string.spin_accept))
-                    }
-                }
-                OutlinedButton(
-                    onClick = onSpinAgain,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = Spacing.xs),
-                ) {
-                    Text(stringResource(R.string.spin_again))
+                    Text(stringResource(R.string.spin_accept))
                 }
             }
         }

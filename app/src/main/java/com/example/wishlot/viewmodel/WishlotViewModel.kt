@@ -238,15 +238,6 @@ class WishlotViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    fun declinePick() {
-        dismissPick()
-    }
-
-    fun spinAgain() {
-        dismissPick()
-        startPick()
-    }
-
     fun dismissPick() {
         _pickState.value = PickUiState.Idle
     }

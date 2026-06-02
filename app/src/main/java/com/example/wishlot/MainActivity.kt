@@ -117,6 +117,7 @@ fun WishlotApp(viewModel: WishlotViewModel = viewModel()) {
                         wishes = activeWishes,
                         formatPrice = viewModel::formatPrice,
                         onWishClick = viewModel::openEditWish,
+                        onDeleteSwipe = viewModel::deleteWish,
                         onAddClick = viewModel::openAddWish,
                     )
                     AppDestinations.TREAT -> TreatYourselfScreen(
@@ -170,8 +171,6 @@ fun WishlotApp(viewModel: WishlotViewModel = viewModel()) {
                 formatPrice = viewModel::formatPrice,
                 onSpinAnimationComplete = viewModel::onSpinAnimationComplete,
                 onAccept = viewModel::acceptPick,
-                onDecline = viewModel::declinePick,
-                onSpinAgain = viewModel::spinAgain,
                 onBack = viewModel::dismissPick,
             )
         }

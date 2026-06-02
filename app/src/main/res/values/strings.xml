@@ -40,10 +40,7 @@
     <string name="pick_go_wishlist">К вишлисту</string>
 
     <string name="spin_result_title">Ваше желание</string>
-    <string name="spin_accept">Беру!</string>
-    <string name="spin_decline">Не сейчас</string>
-    <string name="spin_again">Крутить снова</string>
-    <string name="spin_fulfilled_hint">Отметим как исполненное в списке (покупка — отдельно)</string>
+    <string name="spin_accept">Принято</string>
 
     <string name="history_empty">Пока ничего не исполнили</string>
     <string name="history_fulfilled_at">Исполнено %1$s</string>

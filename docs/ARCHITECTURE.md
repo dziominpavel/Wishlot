@@ -101,6 +101,15 @@ sequenceDiagram
 
 ---
 
+## Swipe-to-Delete (WishlistScreen)
+
+- `SwipeToDismissBox` (Material 3) оборачивает `WishCard`.
+- Свайп влево или вправо → вызов `viewModel.deleteWish(id)`.
+- Фон при свайпе: `MaterialTheme.colorScheme.error` + иконка `Delete`.
+- Тап по карточке (не свайп) → открытие редактирования.
+
+---
+
 ## WishlotViewModel
 
 **StateFlow:**
