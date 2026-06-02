@@ -105,7 +105,7 @@ fun runPick(input: PickInput, random: Random): PickResult {
 | Слой | Ответственность |
 |------|-----------------|
 | БД / domain | `priceMinor: Long` |
-| UI | `NumberFormat.getCurrencyInstance(locale)` или Compose `rememberCurrencyFormatter` |
+| UI | `String.format(locale, "%,.0f", amount)` — число с разделителем тысяч, без символа валюты |
 | Ввод | Парсить строку → minor (копейки), округление до целых копеек |
 
 Пример: 1 499,99 ₽ → хранить `149999` или округлить до `150000` — **в MVP округлять до целых рублей** (копейки = 0) для простоты ввода.

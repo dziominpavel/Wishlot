@@ -50,7 +50,6 @@
 - Низ: карточка победителя (elevation 2).
 - Кнопки в ряд: **Не сейчас** (outlined) | **Беру!** (filled, success tint).
 - Во время вращения — кнопки disabled.
-- Reduced motion: если `wheelAnimationEnabled == false` — crossfade карточки 300 ms.
 
 ### HistoryScreen
 
@@ -59,7 +58,7 @@
 
 ### SettingsScreen
 
-- Формат валюты, переключатель анимации, версия приложения.
+- Статистика, архив, экспорт/импорт, версия приложения.
 
 ---
 

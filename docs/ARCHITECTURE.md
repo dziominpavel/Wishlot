@@ -109,15 +109,14 @@ sequenceDiagram
 |------|----------|
 | `activeWishes` | DAO `status = ACTIVE`, `createdAt ASC, id ASC` |
 | `fulfilledWishes` | DAO `status = FULFILLED`, `fulfilledAt DESC` |
-| `treatBudgetInput` | UI state + DataStore restore |
+| `budgetInput` | UI state + DataStore restore |
 | `pickState` | Idle / Spinning / Result / Empty |
-| `currentPickWinner` | `Wish?` после random |
 | `settings` | DataStore |
 | `errorMessage` | Snackbar |
 
 **Методы:**
 
-- `addWish` / `updateWish` / `deleteWish`
+- `saveWish` / `deleteWish`
 - `startPick(budgetMinor)` — фильтр + random + `pickState`
 - `acceptPick()` — `FULFILLED`
 - `declinePick()` — сброс `pickState`, желание не трогать
@@ -135,7 +134,7 @@ sequenceDiagram
 | Вишлист | `WishlistScreen` — список ACTIVE, FAB «Добавить» |
 | Побаловать себя | `TreatYourselfScreen` — бюджет, кнопка крутить |
 | История | `HistoryScreen` — FULFILLED |
-| Настройки | `SettingsScreen` — валюта, о приложении |
+| Настройки | `SettingsScreen` — статистика, архив, экспорт/импорт, версия |
 
 **Overlay** (как GymProgress / VoiceMind):
 
@@ -157,7 +156,7 @@ sequenceDiagram
 
 | Список | ORDER BY |
 |--------|----------|
-| Активный вишлист | `createdAt ASC, id ASC` |
+| Активный вишлист | `sortOrder ASC, createdAt ASC, id ASC` |
 | История | `fulfilledAt DESC, id DESC` |
 
 ---

@@ -86,8 +86,7 @@ candidates = wishes.where { it.status == ACTIVE && it.priceMinor <= budgetMinor 
 | Исход | UX |
 |-------|-----|
 | `candidates.isEmpty()` | Текст: «Нет желаний до {budget}». Кнопки: изменить бюджет, перейти в вишлист |
-| `candidates.size == 1` | Можно пропустить длинную анимацию (короткий «тык») |
-| `candidates.size > 1` | Полная анимация колеса |
+| `candidates.size >= 1` | Анимация колеса или карточка результата |
 
 ---
 

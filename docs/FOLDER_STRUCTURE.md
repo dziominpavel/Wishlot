@@ -7,9 +7,13 @@
 ```
 Wishlot/
 ├── .cursor/
-│   ├── plans/
 │   └── rules/
-│       └── project-context.mdc      # при bootstrap
+│       └── spec-driven.mdc          # правила AI
+├── .windsurf/
+│   ├── rules/
+│   │   └── spec-driven.mdc          # правила AI
+│   ├── skills/
+│   └── workflows/
 ├── app/src/
 │   ├── main/java/com/example/wishlot/
 │   │   ├── data/
@@ -34,8 +38,8 @@ Wishlot/
 ├── settings.gradle.kts
 ├── gradle.properties
 ├── gradlew / gradlew.bat
-├── AGENTS.md
-└── README.md
+├── README.md
+└── .windsurf/rules/spec-driven.mdc
 ```
 
 ## Отличия от VoiceMind
