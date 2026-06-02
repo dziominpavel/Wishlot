@@ -41,7 +41,6 @@ fun AddEditWishScreen(
     onBack: () -> Unit,
     onSave: (WishEditDraft) -> Unit,
     onDelete: ((Long) -> Unit)?,
-    onArchive: ((Long) -> Unit)?,
     modifier: Modifier = Modifier,
 ) {
     var title by remember(draft) { mutableStateOf(draft.title) }
@@ -125,15 +124,6 @@ fun AddEditWishScreen(
                 Text(stringResource(R.string.wish_save))
             }
             if (draft.id != null) {
-                if (onArchive != null) {
-                    Spacer(modifier = Modifier.height(Spacing.md))
-                    OutlinedButton(
-                        onClick = { onArchive(draft.id) },
-                        modifier = Modifier.fillMaxWidth(),
-                    ) {
-                        Text(stringResource(R.string.wish_archive))
-                    }
-                }
                 if (onDelete != null) {
                     Spacer(modifier = Modifier.height(Spacing.xs))
                     OutlinedButton(

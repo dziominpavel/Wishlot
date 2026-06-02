@@ -19,9 +19,7 @@ import com.example.wishlot.viewmodel.WishStats
 fun SettingsScreen(
     stats: WishStats,
     formatPrice: (Long) -> String,
-    onOpenArchived: () -> Unit,
-    onExportBackup: () -> Unit,
-    onImportBackup: () -> Unit,
+    onOpenHistory: () -> Unit,
     versionName: String,
     buildDate: String,
     modifier: Modifier = Modifier,
@@ -62,29 +60,11 @@ fun SettingsScreen(
 
         HorizontalDivider(modifier = Modifier.padding(vertical = Spacing.lg))
 
-        Text(
-            text = stringResource(R.string.settings_data_title),
-            style = MaterialTheme.typography.titleMedium,
-        )
         OutlinedButton(
-            onClick = onOpenArchived,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = Spacing.md),
-        ) {
-            Text(stringResource(R.string.archived_title))
-        }
-        OutlinedButton(
-            onClick = onExportBackup,
+            onClick = onOpenHistory,
             modifier = Modifier.fillMaxWidth(),
         ) {
-            Text(stringResource(R.string.backup_export))
-        }
-        OutlinedButton(
-            onClick = onImportBackup,
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Text(stringResource(R.string.backup_import))
+            Text(stringResource(R.string.history_title))
         }
 
         HorizontalDivider(modifier = Modifier.padding(vertical = Spacing.lg))

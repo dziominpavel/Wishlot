@@ -50,6 +50,9 @@ class WishlotViewModel(application: Application) : AndroidViewModel(application)
     private val _showArchived = MutableStateFlow(false)
     val showArchived: StateFlow<Boolean> = _showArchived.asStateFlow()
 
+    private val _showHistory = MutableStateFlow(false)
+    val showHistory: StateFlow<Boolean> = _showHistory.asStateFlow()
+
     val activeWishes = repository.observeActive()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
 
@@ -115,6 +118,14 @@ class WishlotViewModel(application: Application) : AndroidViewModel(application)
 
     fun dismissArchived() {
         _showArchived.value = false
+    }
+
+    fun openHistory() {
+        _showHistory.value = true
+    }
+
+    fun dismissHistory() {
+        _showHistory.value = false
     }
 
     fun saveWish(draft: WishEditDraft) {

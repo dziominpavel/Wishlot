@@ -1,14 +1,10 @@
 package com.example.wishlot
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -24,14 +20,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.wishlot.ui.screens.AddEditWishScreen
-import com.example.wishlot.ui.screens.ArchivedScreen
 import com.example.wishlot.ui.screens.HistoryScreen
 import com.example.wishlot.ui.screens.NoCandidatesScreen
 import com.example.wishlot.ui.screens.SettingsScreen
@@ -41,12 +34,6 @@ import com.example.wishlot.ui.screens.WishlistScreen
 import com.example.wishlot.ui.theme.WishlotTheme
 import com.example.wishlot.viewmodel.PickUiState
 import com.example.wishlot.viewmodel.WishlotViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,8 +51,6 @@ class MainActivity : ComponentActivity() {
 fun WishlotApp(viewModel: WishlotViewModel = viewModel()) {
     var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.WISHLIST) }
     val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
-    val context = LocalContext.current
 
     val errorMessage by viewModel.errorMessage.collectAsState()
     val successMessage by viewModel.successMessage.collectAsState()
@@ -74,40 +59,10 @@ fun WishlotApp(viewModel: WishlotViewModel = viewModel()) {
     val budgetInput by viewModel.budgetInput.collectAsState()
     val activeWishes by viewModel.activeWishes.collectAsState()
     val fulfilledWishes by viewModel.fulfilledWishes.collectAsState()
-    val archivedWishes by viewModel.archivedWishes.collectAsState()
-    val showArchived by viewModel.showArchived.collectAsState()
+    val showHistory by viewModel.showHistory.collectAsState()
     val stats by viewModel.stats.collectAsState()
     val showPickOverlay = pickState is PickUiState.Spinning || pickState is PickUiState.AwaitingDecision
     val showNoCandidates = pickState is PickUiState.NoCandidates
-
-    val exportLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.CreateDocument("application/json"),
-    ) { uri: Uri? ->
-        uri ?: return@rememberLauncherForActivityResult
-        scope.launch {
-            try {
-                val json = viewModel.exportBackupJson()
-                writeUri(context, uri, json)
-                snackbarHostState.showSnackbar(context.getString(R.string.export_success))
-            } catch (e: Exception) {
-                snackbarHostState.showSnackbar(e.message ?: context.getString(R.string.error_export_failed))
-            }
-        }
-    }
-
-    val importLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.OpenDocument(),
-    ) { uri: Uri? ->
-        uri ?: return@rememberLauncherForActivityResult
-        scope.launch {
-            try {
-                val json = readUri(context, uri)
-                viewModel.importBackupJson(json)
-            } catch (e: Exception) {
-                snackbarHostState.showSnackbar(e.message ?: "Import failed")
-            }
-        }
-    }
 
     LaunchedEffect(errorMessage) {
         errorMessage?.let { message ->
@@ -123,10 +78,10 @@ fun WishlotApp(viewModel: WishlotViewModel = viewModel()) {
         }
     }
 
-    BackHandler(enabled = editDraft != null || showPickOverlay || showNoCandidates || showArchived) {
+    BackHandler(enabled = editDraft != null || showPickOverlay || showNoCandidates || showHistory) {
         when {
             editDraft != null -> viewModel.dismissEdit()
-            showArchived -> viewModel.dismissArchived()
+            showHistory -> viewModel.dismissHistory()
             showNoCandidates -> viewModel.dismissNoCandidates()
             showPickOverlay -> viewModel.dismissPick()
         }
@@ -170,22 +125,10 @@ fun WishlotApp(viewModel: WishlotViewModel = viewModel()) {
                         hasActiveWishes = activeWishes.isNotEmpty(),
                         onSpin = viewModel::startPick,
                     )
-                    AppDestinations.HISTORY -> HistoryScreen(
-                        wishes = fulfilledWishes,
-                        formatPrice = viewModel::formatPrice,
-                        onRestore = viewModel::restoreWish,
-                    )
                     AppDestinations.SETTINGS -> SettingsScreen(
                         stats = stats,
                         formatPrice = viewModel::formatPrice,
-                        onOpenArchived = viewModel::openArchived,
-                        onExportBackup = {
-                            val stamp = SimpleDateFormat("yyyyMMdd_HHmm", Locale.US).format(Date())
-                            exportLauncher.launch("wishlot_backup_$stamp.json")
-                        },
-                        onImportBackup = {
-                            importLauncher.launch(arrayOf("application/json", "text/plain", "*/*"))
-                        },
+                        onOpenHistory = viewModel::openHistory,
                         versionName = viewModel.versionName,
                         buildDate = viewModel.buildDate,
                     )
@@ -199,17 +142,15 @@ fun WishlotApp(viewModel: WishlotViewModel = viewModel()) {
                 onBack = viewModel::dismissEdit,
                 onSave = viewModel::saveWish,
                 onDelete = viewModel::deleteWish,
-                onArchive = if (draft.id != null) viewModel::archiveWish else null,
             )
         }
 
-        if (showArchived) {
-            ArchivedScreen(
-                wishes = archivedWishes,
+        if (showHistory) {
+            HistoryScreen(
+                wishes = fulfilledWishes,
                 formatPrice = viewModel::formatPrice,
-                onBack = viewModel::dismissArchived,
                 onRestore = viewModel::restoreWish,
-                onDelete = viewModel::deleteWish,
+                onBack = viewModel::dismissHistory,
             )
         }
 
@@ -237,14 +178,3 @@ fun WishlotApp(viewModel: WishlotViewModel = viewModel()) {
     }
 }
 
-private suspend fun readUri(context: Context, uri: Uri): String = withContext(Dispatchers.IO) {
-    context.contentResolver.openInputStream(uri)?.use { stream ->
-        stream.bufferedReader().readText()
-    } ?: error("Cannot read file")
-}
-
-private suspend fun writeUri(context: Context, uri: Uri, content: String) = withContext(Dispatchers.IO) {
-    context.contentResolver.openOutputStream(uri)?.use { stream ->
-        stream.write(content.toByteArray(Charsets.UTF_8))
-    } ?: error("Cannot write file")
-}

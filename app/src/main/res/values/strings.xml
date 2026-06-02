@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">Wishlot</string>
     <string name="tab_wishlist">Вишлист</string>
-    <string name="tab_treat">Побаловать себя</string>
-    <string name="tab_history">История</string>
+    <string name="tab_treat">Крутить</string>
     <string name="tab_settings">Настройки</string>
 
     <string name="wishlist_empty">Добавьте первое желание</string>
@@ -20,6 +19,8 @@
     <string name="wish_add_title">Новое желание</string>
     <string name="wish_edit_title">Редактировать</string>
     <string name="confirm_back">Назад</string>
+    <string name="back">Назад</string>
+    <string name="history_title">История</string>
 
     <string name="category_tech">Техника</string>
     <string name="category_books">Книги</string>
