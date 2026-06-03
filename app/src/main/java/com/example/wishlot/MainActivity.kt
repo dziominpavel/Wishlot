@@ -5,10 +5,16 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -100,10 +106,20 @@ fun WishlotApp(viewModel: WishlotViewModel = viewModel()) {
                     AppDestinations.entries.forEach { destination ->
                         item(
                             icon = {
-                                Icon(
-                                    imageVector = destination.icon,
-                                    contentDescription = destination.label,
-                                )
+                                if (destination == AppDestinations.TREAT) {
+                                    Image(
+                                        painter = painterResource(R.drawable.wheel_disc),
+                                        contentDescription = destination.label,
+                                        modifier = Modifier
+                                            .size(24.dp)
+                                            .clip(CircleShape),
+                                    )
+                                } else {
+                                    Icon(
+                                        imageVector = destination.icon,
+                                        contentDescription = destination.label,
+                                    )
+                                }
                             },
                             label = { Text(destination.label) },
                             selected = destination == currentDestination,

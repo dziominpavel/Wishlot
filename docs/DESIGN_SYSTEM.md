@@ -42,7 +42,7 @@
 
 - Крупное поле **бюджета** по центру.
 - Подсказка: «Покажем желания не дороже этой суммы».
-- CTA «Крутить» — full width, disabled если бюджет ≤ 0 или нет ACTIVE желаний.
+- CTA «Крутить» — full width, иконка `Casino` перед текстом, disabled если бюджет ≤ 0 или нет ACTIVE желаний.
 - Chips быстрого бюджета (опционально фаза 3): последний, 1000, 3000, 5000.
 
 ### SpinResultScreen (колесо)
@@ -67,12 +67,17 @@
 
 | Параметр | Значение |
 |----------|----------|
-| Изображение | `ic_launcher_foreground` (PNG/vector) |
+| Изображения | `wheel_disc`, `wheel_pointer` (PNG) |
 | Длительность | ~3 s, `FastOutSlowInEasing` |
-| Вращение | `Modifier.graphicsLayer { rotationZ }` через `Animatable` |
+| Вращение | `wheel_disc` — `Modifier.graphicsLayer { rotationZ }` через `Animatable`; остальные слои статичны |
 | Обороты | 4–6 полных + случайный финальный угол |
 | Haptic | Light impact при остановке |
-| a11y | `contentDescription`: «Колесо выбора, крутится» |
+| a11y | `contentDescription`: «Колесо фортуны, крутится» |
+
+### Слои
+
+- **wheel_disc** — вращающийся круг с сегментами и центральным подарком (единый PNG), `clip(CircleShape)`.
+- **wheel_pointer** — статичный указатель сверху (`Alignment.TopCenter`), смещён вверх для эффекта «над диском».
 
 Не использовать rapid flashing (более 3 Hz) — доступность.
 
@@ -82,7 +87,7 @@
 
 - Отступы: `Spacing`, размеры: `Dimens` в `ui/theme/`.
 - Цвета через `MaterialTheme` + `WishlotTheme.colors`, без inline hex в screens.
-- Иконки: `CardGiftcard`, `Casino` (колесо), `CheckCircle`, `History`, `Settings`.
+- Иконки: `CardGiftcard` (вишлист), `wheel_disc` PNG (крутить), `CheckCircle`, `History`, `Settings`.
 - Lint: `ContentDescription` на интерактивных иконках (ошибка сборки — как GymProgress).
 
 ---
