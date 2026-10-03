@@ -33,7 +33,8 @@ Wishlot/
 ├── gradle/
 │   └── libs.versions.toml
 ├── docs/                            # эта папка
-├── version.properties
+├── version                          # версия приложения (MAJOR.MINOR.PATCH)
+├── CHANGELOG.md
 ├── build.gradle.kts
 ├── settings.gradle.kts
 ├── gradle.properties

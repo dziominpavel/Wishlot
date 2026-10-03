@@ -26,7 +26,7 @@
 Структура Gradle — копировать из **GymProgress** / **VoiceMind**:
 
 - `gradle/libs.versions.toml`
-- `version.properties` с auto bump patch на assemble
+- файл `version` — единственный источник версии, автобампа при сборке нет (см. `docs/versioning.md`)
 - `build.gradle.kts` (root + app)
 - `applicationId`: `com.example.wishlot`
 
