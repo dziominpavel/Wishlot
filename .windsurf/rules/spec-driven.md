@@ -1,6 +1,6 @@
 ---
+trigger: always_on
 description: Spec-Driven Development workflow — pending-файлы, согласование, cross-repo
-alwaysApply: true
 ---
 
 > ⚠️ **HARD STOP** — Read this BEFORE any action. If you are about to write code, edit files, or update docs — STOP. You MUST create a pending file and get explicit user "ok" first. See `docs/SDD-RULES.md`. Violating this rule means reverting all changes immediately.
